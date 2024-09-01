@@ -1,0 +1,71 @@
+
+;q1
+LXI H, 3000H
+MOV A, M          
+INX H             
+MOV B, M  
+ADD B
+INX H
+MOV M, A
+HLT
+
+;q2
+LXI H, 3000H
+MOV A, M          
+INX H             
+MOV B, M  
+SUB B
+INX H
+MOV M, A
+HLT
+
+;q3
+LXI H, 3000H
+MOV C, M
+LXI H, 3010
+MOV A, M
+LXI H, 3001H             
+MOV B, M
+BACK: ADD C
+DCR B
+JNZ BACK
+LXI H, 3002H
+MOV M, A
+HLT
+
+;q4
+LXI H, 3000H
+MOV A, M
+LXI H, 3001H
+MOV C, M
+LXI H, 3010H             
+MOV B, M
+BACK: INR B
+SUB C
+JNZ BACK
+LXI H, 3002H
+MOV M, B
+HLT
+
+;q5
+LXI H, 2000H
+MOV C, M
+LXI H, 2010
+MOV A, M
+LXI H, 2001H             
+MOV B, M
+BACK: ADD C
+DCR B
+JNZ BACK
+
+LXI H, 2002H
+MOV C, M
+LXI H, 2003H             
+MOV B, M
+MULT: ADD C
+DCR B
+JNZ MULT
+LXI H, 2005H
+MOV M, A
+
+HLT

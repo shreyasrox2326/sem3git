@@ -1,0 +1,21 @@
+FROM openjdk:11-jre-slim
+
+# Install necessary packages and dependencies
+RUN apt-get update && \
+    apt-get install -y wget \
+                       libx11-6 \
+                       libxext6 \
+                       libxrender1 \
+                       libxi6 \
+                       libxtst6 \
+                       libxrandr2 \
+                       libfontconfig1 \
+                       libgtk-3-0 && \
+    wget -q https://courses.missouristate.edu/KenVollmar/mars/MARS_4_5_Aug2014/Mars4_5.jar -O /mars.jar && \
+    rm -rf /var/lib/apt/lists/*
+
+# Set the working directory
+WORKDIR /app
+
+# Run the JAR file
+CMD ["java", "-jar", "/mars.jar"]
