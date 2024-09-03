@@ -1,0 +1,60 @@
+JMP START
+
+; Subroutine to calculate area
+AREA: LXI H, 6000H  ; Load address of base into HL
+    MOV A, M      ; Move base into register A
+    MOV C, A      ; Store base in C (for multiplication)
+    
+    LXI H, 6001H  ; Load address of height into HL
+    MOV A, M      ; Move height into register A
+    MOV B, A      ; Store height in B (for multiplication)
+
+    ; Multiply base and height
+    LXI H, 3000H  ; Load address for base into HL
+    MOV M, C       ; Store base at 3000H
+    LXI H, 3001H  ; Load address for height into HL
+    MOV M, B       ; Store height at 3001H
+    
+    ; Call multiplication subroutine
+    CALL MULTIPLY  ; Multiply base and height, result in 3002H
+
+    ; Divide result by 2
+    LXI H, 6002H  ; Load address of result into HL
+    RRC           ; Rotate left to divide by 2
+    MOV M, A      ; Store the final result (area) at 3002H
+
+    RET           ; Return from subroutine
+
+; Multiplication subroutine
+MULTIPLY: LXI H, 6000H  ; Load address of multiplier (base) into HL
+    MOV C, M      ; Move multiplier into C
+    LXI H, 6001H  ; Load address of multiplicand (height) into HL
+    MOV A, M      ; Move multiplicand into A
+    MOV B, C      ; Move multiplier into B
+
+    ; Initialize result to 0
+    LXI H, 3002H  ; Load address of result into HL
+    MVI M, 00H    ; Initialize result to 0
+    MOV C, A      ; Store multiplicand in C
+    MOV A, M      ; Initialize accumulator to 0
+
+BACK: ADD C         ; Add multiplicand to result
+    DCR B         ; Decrement multiplier
+    JNZ BACK      ; If multiplier is not zero, repeat
+
+    RET           ; Return from subroutine
+
+
+START: LXI H, 6000H   ; Load address of base and height in HL register pair
+MVI A, 03H     ; Load base (3) into register A
+STA 6000H      ; Store base at 6000H
+MVI A, 04H     ; Load height (4) into register A
+STA 6001H      ; Store height at 6001H
+
+; Call the AREA subroutine
+LXI H, 6000H   ; Load address of base
+CALL AREA      ; Call the AREA subroutine
+
+HLT            ; Halt the program
+
+
