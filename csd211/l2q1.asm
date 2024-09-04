@@ -1,11 +1,16 @@
 .data
-num: 1 # number to be checked
 pve: .asciiz " is positive"
 nve: .asciiz " is negative"
 zer: .asciiz " is zero"
+inputstr: .asciiz "Enter the number to be checked: "
 
 .text
-lw $t0, num # load number into $t0
+la $a0, inputstr
+li $v0, 4
+syscall
+li $v0, 5
+syscall
+la $t0, ($v0)
 
 # conditional branches
 bltz $t0, negative 
@@ -24,8 +29,8 @@ zero: # storing 0 in $t1
 la $t1, zer
 b exit
 
-exit: # printing the value stored in $t1
-lw $a0, num
+exit: # printing the value stored in $t0
+la $a0, ($t0)
 li $v0, 1
 syscall
 
