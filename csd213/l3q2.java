@@ -12,30 +12,30 @@ class Triangle {
         this.side2 = b;
         this.side3 = c;
     }
-    public double getSide1() {
+    double getSide1() {
         return this.side1;
     }
-    public double getSide2() {
+    double getSide2() {
         return this.side2;
     }
-    public double getSide3() {
+    double getSide3() {
         return this.side3;
     }
-    public void setSide1(double side11) {
+    void setSide1(double side11) {
         side1 = side11;
     }
-    public void setSide2(double side22) {
+    void setSide2(double side22) {
         side2 = side22;
     }
-    public void setSide3(double side33) {
+    void setSide3(double side33) {
         side3 = side33;
     }
-    public double getArea() {
+    double getArea() {
         double s = (side1 + side2 + side3) / 2;
 
         return Math.sqrt(s * (s - side1) * (s - side2) * (s - side3));
     }
-    public double getPerimeter() {
+    double getPerimeter() {
         return (side1 + side2 + side3);
     }
 }
