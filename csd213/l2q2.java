@@ -1,4 +1,5 @@
 public class l2q2 {
+    @SuppressWarnings("unused")
     public static void main(String[] args) {
         counter c1 = new counter();
         System.out.println("Created c1");
