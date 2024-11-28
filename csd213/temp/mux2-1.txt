@@ -1,0 +1,45 @@
+// mux2to1 module
+module mux2to1 (
+    input wire a,        // First input
+    input wire b,        // Second input
+    input wire sel,      // Select signal
+    output wire out      // Output
+);
+    // The MUX logic: if sel is 0, output a; if sel is 1, output b
+    assign out = (sel) ? b : a;
+endmodule
+
+// Main module (testbench)
+module main;
+    reg a, b, sel;       // Declare input registers for the MUX
+    wire out;            // Declare wire for the output of the MUX
+
+    // Instantiate the mux2to1 submodule
+    mux2to1 uut (
+        .a(a),            // Connect a to the submodule's a
+        .b(b),            // Connect b to the submodule's b
+        .sel(sel),        // Connect sel to the submodule's sel
+        .out(out)         // Connect out to the submodule's out
+    );
+
+    // Test procedure
+    initial begin
+        // Initialize inputs
+        a = 0; b = 0; sel = 0; 
+        #10; // Wait for 10 time units
+
+        // Test various input combinations
+        a = 0; b = 1; sel = 0; #10;  // Expected output: 0
+        a = 0; b = 1; sel = 1; #10;  // Expected output: 1
+        a = 1; b = 0; sel = 0; #10;  // Expected output: 1
+        a = 1; b = 0; sel = 1; #10;  // Expected output: 0
+
+        // Finish the simulation
+        $finish;
+    end
+
+    // Monitor the output
+    initial begin
+        $monitor("At time %t, a = %b, b = %b, sel = %b, out = %b", $time, a, b, sel, out);
+    end
+endmodule
